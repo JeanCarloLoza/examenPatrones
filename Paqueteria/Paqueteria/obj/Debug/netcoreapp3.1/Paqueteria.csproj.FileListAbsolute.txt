@@ -1,0 +1,11 @@
+C:\Trabajo\Cursos\Patrones\examen\Paqueteria\Paqueteria\bin\Debug\netcoreapp3.1\Paqueteria.exe
+C:\Trabajo\Cursos\Patrones\examen\Paqueteria\Paqueteria\bin\Debug\netcoreapp3.1\Paqueteria.deps.json
+C:\Trabajo\Cursos\Patrones\examen\Paqueteria\Paqueteria\bin\Debug\netcoreapp3.1\Paqueteria.runtimeconfig.json
+C:\Trabajo\Cursos\Patrones\examen\Paqueteria\Paqueteria\bin\Debug\netcoreapp3.1\Paqueteria.runtimeconfig.dev.json
+C:\Trabajo\Cursos\Patrones\examen\Paqueteria\Paqueteria\bin\Debug\netcoreapp3.1\Paqueteria.dll
+C:\Trabajo\Cursos\Patrones\examen\Paqueteria\Paqueteria\bin\Debug\netcoreapp3.1\Paqueteria.pdb
+C:\Trabajo\Cursos\Patrones\examen\Paqueteria\Paqueteria\obj\Debug\netcoreapp3.1\Paqueteria.csprojAssemblyReference.cache
+C:\Trabajo\Cursos\Patrones\examen\Paqueteria\Paqueteria\obj\Debug\netcoreapp3.1\Paqueteria.AssemblyInfoInputs.cache
+C:\Trabajo\Cursos\Patrones\examen\Paqueteria\Paqueteria\obj\Debug\netcoreapp3.1\Paqueteria.AssemblyInfo.cs
+C:\Trabajo\Cursos\Patrones\examen\Paqueteria\Paqueteria\obj\Debug\netcoreapp3.1\Paqueteria.dll
+C:\Trabajo\Cursos\Patrones\examen\Paqueteria\Paqueteria\obj\Debug\netcoreapp3.1\Paqueteria.pdb
