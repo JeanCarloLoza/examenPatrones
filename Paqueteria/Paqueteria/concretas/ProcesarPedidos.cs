@@ -14,14 +14,16 @@ namespace Paqueteria.concretas
         ILectorArchivo lectorArchivo;
         IImpresorMensajes ImpresorMensajes;
         IFormateadorMensaje formateadorMensaje;
+        IAsignador asignador;
 
         public ProcesarPedidos(DateTime _dateTime, ILectorArchivo _lectorArchivo, IImpresorMensajes _impresorMensajes, 
-            IFormateadorMensaje _formateadorMensaje)
+            IFormateadorMensaje _formateadorMensaje, IAsignador _asignador)
         {
             dtHoy = _dateTime;
             lectorArchivo = _lectorArchivo;
             ImpresorMensajes = _impresorMensajes;
             formateadorMensaje = _formateadorMensaje;
+            asignador = _asignador;
         }
 
         public void Procesar()
@@ -56,12 +58,15 @@ namespace Paqueteria.concretas
             ITrasportador trasportador;
             IMedioTransporte medioTrasporte;
             IPaqueterias paqueteria;
+            IFabricamediosTrasporte fabrica;
 
             origen = arrFila[0];
             destino = arrFila[1];
             distancia = double.Parse(arrFila[2]);
-            medioTrasporte = AsignarTrasporte(arrFila[4]);
-            paqueteria = AsignarPaqueria(arrFila[3]);
+            //medioTrasporte = AsignarTrasporte(arrFila[4]);
+            fabrica = asignador.AsignarTrasporte(arrFila[4]);
+            medioTrasporte = fabrica.CreaMedioTrasporte();
+            paqueteria = asignador.AsignarPaqueria(arrFila[3]);
             if (medioTrasporte == null || null == paqueteria) { 
                 return; 
             }
@@ -77,88 +82,19 @@ namespace Paqueteria.concretas
 
             cRespuesta = formateadorMensaje.FormatearMensajePedido(origen, lEntregado, destino, fechaEntrega, costo, paqueteria.cNombre, dtHoy);
             ImpresorMensajes.mostrarMensajeCondicionado(cRespuesta, lEntregado);
-            ValidarOtrasPaqueterias(costo,distancia,trasportador);
+            ValidarOtrasPaqueterias(costo, paqueteria.cNombre, distancia, ImpresorMensajes, medioTrasporte);
         }
 
-        private IMedioTransporte AsignarTrasporte(string _cClave) {
-            IMedioTransporte transporte;
-            switch (_cClave) {
-                case "Tren":
-                    transporte = new Tren();
-                    break;
-                default:
-                    ImpresorMensajes.mostrarMensajeError(string.Format("El medio de trasporte: {0} no se encuentra registrado.", _cClave));
-                    transporte = null;
-                    break;
 
-            }
-            return transporte;
-        }
-        private IPaqueterias AsignarPaqueria(string _cClave)
-        {
-            IPaqueterias paqueteria;
-            switch (_cClave)
-            {
-                case "Estafeta":
-                    paqueteria = new Estafeta();
-                    break;
-                default:
-                    ImpresorMensajes.mostrarMensajeError(string.Format("La Paquetería: {0} no se encuentra registrada en nuestra red de distribución.",_cClave));
-                    paqueteria = null;
-                    break;
+        public void ValidarOtrasPaqueterias(double costoInicial, string mejorPaqueteria, double distancia, IImpresorMensajes impresor, IMedioTransporte trasporte) {
+            iManejadorCadenaResponsabilidad manejador1 = new CalculadorCosto(new Fedex());
+            iManejadorCadenaResponsabilidad manejador2 = new CalculadorCosto(new Estafeta());
+            iManejadorCadenaResponsabilidad manejador3 = new CalculadorCosto(new DHL());
 
-            }
-            return paqueteria;
-        }
+            manejador1.setNext(manejador2);
+            manejador2.setNext(manejador3);
 
-        public void ValidarOtrasPaqueterias(double costoAnt,double distacia, ITrasportador trasportadorAnt) {
-            string crespuesta = "";
-            double costoNuevo = 0;
-            double menorCosto = costoAnt;
-            string mejorPaqueteria = trasportadorAnt.obtenerPaqueteria().cNombre;
-            ITrasportador trasportador = null;
-            IMedioTransporte trasporte = trasportadorAnt.obtenerTrasporte();
-            IPaqueterias paqueteria = new Estafeta();
-
-            if (trasportadorAnt.obtenerPaqueteria() !=paqueteria && paqueteria.ValidaContieneTrasporte(trasporte))
-            {
-                trasportador = new Trasportador(trasporte,paqueteria);
-                costoNuevo = trasportador.CalcularCostoTrasporte(distacia);
-                if (costoNuevo < menorCosto)
-                {
-                    menorCosto = costoNuevo;
-                    mejorPaqueteria = paqueteria.cNombre;
-                }
-            }
-            paqueteria = new DHL();
-
-            if (trasportadorAnt.obtenerPaqueteria() != paqueteria && paqueteria.ValidaContieneTrasporte(trasporte))
-            {
-                trasportador = new Trasportador(trasporte, paqueteria);
-                costoNuevo = trasportador.CalcularCostoTrasporte(distacia);
-                if (costoNuevo < menorCosto)
-                {
-                    menorCosto = costoNuevo;
-                    mejorPaqueteria = paqueteria.cNombre;
-                }
-            }
-            paqueteria = new Fedex();
-
-            if (trasportadorAnt.obtenerPaqueteria() != paqueteria && paqueteria.ValidaContieneTrasporte(trasporte))
-            {
-                trasportador = new Trasportador(trasporte, paqueteria);
-                costoNuevo = trasportador.CalcularCostoTrasporte(distacia);
-                if (costoNuevo < menorCosto)
-                {
-                    menorCosto = costoNuevo;
-                    mejorPaqueteria = paqueteria.cNombre;
-                }
-            }
-            if (trasportadorAnt.obtenerPaqueteria().cNombre != mejorPaqueteria)
-            {
-                ImpresorMensajes.mostrarMensaje(string.Format("Si hubieras pedido en {0} te hubiera costado ${1} más barato.",
-                    mejorPaqueteria, costoAnt-menorCosto));
-            }
+            manejador1.hacer(costoInicial, costoInicial, mejorPaqueteria, distancia, impresor, trasporte);
         }
     }
 }

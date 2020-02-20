@@ -14,8 +14,9 @@ namespace Paqueteria
             ILectorArchivo lector = new LectorTxt(cRutaArchivo);
             IImpresorMensajes mensajes = new ImpresorMensajeConsola();
             IFormateadorMensaje formateador = new FormateadorMensaje();
+            IAsignador asignador = new Asignador(mensajes);
 
-            IProcesadorPedidos procesador = new ProcesarPedidos(dtHoy, lector, mensajes, formateador);
+            IProcesadorPedidos procesador = new ProcesarPedidos(dtHoy, lector, mensajes, formateador, asignador);
 
             procesador.Procesar();
             
