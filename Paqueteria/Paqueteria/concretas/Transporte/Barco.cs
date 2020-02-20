@@ -5,11 +5,14 @@ using System.Text;
 
 namespace Paqueteria.clases
 {
-    class Barco : IMedioTrasporte
+    class Barco : IMedioTransporte
     {
-        double dCostoKM = 1;
-        double dVelocidadKM = 46;
-        string cNombre = "Barco";
+        public Barco()
+        {
+            base.dCostoKM = 1;
+            base.dVelocidadKM = 46;
+            base.cNombre = "Barco";
+        }
 
     }
 }

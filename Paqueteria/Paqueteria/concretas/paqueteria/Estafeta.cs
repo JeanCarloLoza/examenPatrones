@@ -9,11 +9,10 @@ namespace Paqueteria.concretas.paqueteria
 {
     class Estafeta : IPaqueterias
     {
-        string cNombre = "Estafeta";
-        double dMargenUtilidad = 20;
-        List<IMedioTrasporte> lstMediosTrasporte = new List<IMedioTrasporte>();
-
-        Estafeta() {
+        public Estafeta()
+        {
+            cNombre = "Estafeta";
+            dMargenUtilidad = 20;
             lstMediosTrasporte.Add(new Barco());
             lstMediosTrasporte.Add(new Tren());
         }

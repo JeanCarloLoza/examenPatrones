@@ -5,10 +5,13 @@ using System.Text;
 
 namespace Paqueteria.clases
 {
-    class Avion : IMedioTrasporte
+    class Avion : IMedioTransporte
     {
-        double dCostoKM = 10;
-        double dVelocidadKM = 600;
-        string cNombre = "Avion";
+        public Avion()
+        {
+            base.dCostoKM = 10;
+            base.dVelocidadKM = 600;
+            base.cNombre = "Avion";
+        }
     }
 }

@@ -6,6 +6,8 @@ namespace Paqueteria.abtrstacciones
 {
     interface IImpresorMensajes
     {
-        void mostrarMensaje(string cRespusta);
+        void mostrarMensajeCondicionado(string cRespusta,bool lEntregado);
+        public void mostrarMensajeError(string cMensaje);
+        public void mostrarMensaje(string cMensaje);
     }
 }

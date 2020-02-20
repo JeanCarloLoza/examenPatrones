@@ -6,5 +6,6 @@ namespace Paqueteria.abtrstacciones
 {
     interface IProcesadorPedidos
     {
+        public void Procesar();
     }
 }

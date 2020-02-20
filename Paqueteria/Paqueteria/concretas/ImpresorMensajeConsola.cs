@@ -7,10 +7,29 @@ namespace Paqueteria.concretas
 {
     class ImpresorMensajeConsola : IImpresorMensajes
     {
-        public void mostrarMensaje(string cRespusta)
+        public void mostrarMensajeCondicionado(string cRespusta,bool lEntregado)
         {
-            System.Console.WriteLine(cRespusta);
-            System.Console.ReadKey();
+            if (lEntregado)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+            }
+            else {
+                Console.BackgroundColor = ConsoleColor.Yellow;
+                Console.ForegroundColor = ConsoleColor.Black;
+            }
+            mostrarMensaje(cRespusta);
+            Console.ResetColor();
+        }
+
+        public void mostrarMensajeError(string cMensaje)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            mostrarMensaje(cMensaje);
+            Console.ResetColor();
+        }
+        public void mostrarMensaje(string cMensaje)
+        {
+            System.Console.WriteLine(cMensaje);
         }
     }
 }

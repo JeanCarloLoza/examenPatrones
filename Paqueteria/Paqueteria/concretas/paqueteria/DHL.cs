@@ -9,12 +9,10 @@ namespace Paqueteria.concretas.paqueteria
 {
     class DHL : IPaqueterias
     {
-        string cNombre = "DHL";
-        double dMargenUtilidad = 40;
-        List<IMedioTrasporte> lstMediosTrasporte = new List<IMedioTrasporte>();
-
-        DHL()
+        public DHL()
         {
+            cNombre = "DHL";
+            dMargenUtilidad = 40;
             lstMediosTrasporte.Add(new Avion());
             lstMediosTrasporte.Add(new Barco());
         }

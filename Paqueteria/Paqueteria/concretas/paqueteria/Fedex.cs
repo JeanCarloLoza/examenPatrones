@@ -9,12 +9,10 @@ namespace Paqueteria.concretas.paqueteria
 {
     class Fedex : IPaqueterias
     {
-        string cNombre = "Fedex";
-        double dMargenUtilidad = 50;
-        List<IMedioTrasporte> lstMediosTrasporte = new List<IMedioTrasporte>();
-
-        Fedex()
+        public Fedex()
         {
+            cNombre = "Fedex";
+            dMargenUtilidad = 50;
             lstMediosTrasporte.Add(new Barco());
         }
     }
