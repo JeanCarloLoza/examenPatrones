@@ -10,7 +10,7 @@ namespace Paqueteria.abtrstacciones
         public string cNombre;
         public double dMargenUtilidad;
         public List<IMedioTransporte> lstMediosTrasporte = new List<IMedioTransporte>();
-
+         
         public bool ValidaContieneTrasporte(IMedioTransporte trasporte) {
             return lstMediosTrasporte.Exists(x=> x.cNombre==trasporte.cNombre);
         }
